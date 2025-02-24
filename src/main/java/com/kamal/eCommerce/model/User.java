@@ -2,6 +2,9 @@ package com.kamal.eCommerce.model;
 
 import jakarta.persistence.*;
 
+/**
+ * Base User class for common user properties.
+ */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User {
@@ -21,9 +24,23 @@ public class User {
     }
 
     // Getters and Setters
-    public Long getId() { return id; }
-    public String getName() { return name; }
-    public String getEmail() { return email; }
-    public String getPassword() { return password; }
-    public void setPassword(String password) { this.password = password; }
+    public Long getId() {
+        return id;
+    }
+  
+    public String getName() {
+        return name;
+    }
+  
+    public String getEmail() {
+        return email;
+    }
+  
+    public String getPassword() {
+        return password;
+    }
+  
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

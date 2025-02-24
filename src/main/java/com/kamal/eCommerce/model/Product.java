@@ -2,6 +2,9 @@ package com.kamal.eCommerce.model;
 
 import jakarta.persistence.*;
 
+/**
+ * Product entity represents products in the catalog.
+ */
 @Entity
 public class Product {
     @Id

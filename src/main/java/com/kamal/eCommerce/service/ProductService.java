@@ -8,31 +8,41 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
+/**
+ * Service class for handling product operations.
+ */
 @Service
 public class ProductService {
 
     @Autowired
     private ProductRepository productRepository;
-
     @Autowired
     private SellerRepository sellerRepository;
 
-    //  Get all products
+    /**
+     * Get all products.
+     */
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
 
-    //  Search products by name
+    /**
+     * Search products by name.
+     */
     public List<Product> searchProduct(String name) {
         return productRepository.findByNameContainingIgnoreCase(name);
     }
 
-    //  Get product details by ID
+    /**
+     * Get product details by ID.
+     */
     public Product getProductById(Long id) {
         return productRepository.findById(id).orElse(null);
     }
 
-    // Seller adds a product
+    /**
+     * Seller adds a product.
+     */
     public String addProduct(Product product, String sellerEmail) {
         Seller seller = sellerRepository.findByEmail(sellerEmail);
         if (seller == null) {
@@ -43,7 +53,9 @@ public class ProductService {
         return "Product added successfully!";
     }
 
-    //  Seller updates a product
+    /**
+     * Seller updates a product.
+     */
     public String updateProduct(Long productId, Product updatedProduct, String sellerEmail) {
         Product existingProduct = productRepository.findById(productId).orElse(null);
         if (existingProduct == null || !existingProduct.getSeller().getEmail().equals(sellerEmail)) {
@@ -56,7 +68,9 @@ public class ProductService {
         return "Product updated successfully!";
     }
 
-    //  Seller deletes a product
+    /**
+     * Seller deletes a product.
+     */
     public String deleteProduct(Long productId, String sellerEmail) {
         Product product = productRepository.findById(productId).orElse(null);
         if (product == null || !product.getSeller().getEmail().equals(sellerEmail)) {

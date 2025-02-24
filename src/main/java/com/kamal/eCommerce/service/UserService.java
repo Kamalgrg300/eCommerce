@@ -3,49 +3,58 @@ package com.kamal.eCommerce.service;
 import com.kamal.eCommerce.model.Admin;
 import com.kamal.eCommerce.model.User;
 import com.kamal.eCommerce.repository.UserRepository;
-
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
+/**
+ * Service class for handling user operations.
+ */
 @Service
 public class UserService {
 
     @Autowired
     private UserRepository userRepository;
 
-    // Register a user
+    /**
+     * Register a new user.
+     */
     public User registerUser(User user) {
         return userRepository.save(user);
     }
 
-    // User login
-    public User loginUser(String email, String password) {
-        return userRepository.findByEmailAndPassword(email, password);
+    /**
+     * User login.
+     */
+    public String loginUser(String email, String password) {
+        User user = userRepository.findByEmail(email);
+        if (user == null || !user.getPassword().equals(password)) {
+            return "Invalid credentials";
+        }
+        return "Login successful";
     }
 
-    //register admin
+    /**
+     * Register an admin.
+     */
     public User registerAdmin(Admin admin) {
         return userRepository.save(admin);
     }
 
-    
-    //fetching can de done only by admin.
-    //admin can only view
-    public String getAllUsers(String email) {
+    /**
+     * Get all users (admin only).
+     */
+    public List<User> getAllUsers(String email) {
         User user = userRepository.findByEmail(email);
-        if (user != null && user instanceof Admin) {
-            List<User> users = userRepository.findAll();
-            return users.toString();
+        if (user instanceof Admin) {
+            return userRepository.findAll();
         }
-        return "Access denied. Only admin can view users.";
+        throw new RuntimeException("Access denied. Only admins can view users.");
     }
 
-   
-    
-    
- // Reset Password
+    /**
+     * Reset password for a user.
+     */
     public String resetPassword(String email, String newPassword) {
         User user = userRepository.findByEmail(email);
         if (user != null) {
@@ -55,5 +64,4 @@ public class UserService {
         }
         return "User not found";
     }
-
 }

@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: ECOMMERCE-SERVICE  # Service name for Eureka registration
+  datasource:
+    url: jdbc:mysql://localhost:3306/eCommerce
+    username: root
+    password: Minnesota9803094470!
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
+
+server:
+  port: 8080  # Change if needed
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/  # External Eureka server URL
+  instance:
+    preferIpAddress: true
